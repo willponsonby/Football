@@ -25,8 +25,8 @@ shinyServer(function(input, output) {
   g = r() %>% ggplot(aes(x = reorder(league_id, -Percentage), y = Percentage)) +
     geom_bar(aes(fill = Percentage), stat = "identity") +
     ggtitle("Winnings by Agency for consistent betting on Home Team/Away Team/Draw") +
-    xlab("League") +
-    ylab("Winnings %") +
+    ylab("Winnings/Losses %") +
+    xlab("") +
     theme(axis.text.x = element_text(angle=45))
 ggplotly(g)
   })
@@ -35,18 +35,19 @@ ggplotly(g)
     
     full_recovery %>% 
       filter(league_id == input$league) %>% 
-      mutate(result = ifelse(home_team_goal>away_team_goal, "H", 
-                             ifelse(away_team_goal>home_team_goal, "A", "D"))) %>%
+      mutate(result = ifelse(home_team_goal>away_team_goal, "Home Win", 
+                             ifelse(away_team_goal>home_team_goal, "Away Win", "Draw"))) %>%
       group_by(stage, result) %>% 
       select(stage, result) %>% 
-      summarise(count = n()) 
+      summarise(Percentage = n()) 
   })
 
   output$Stage <- renderPlotly({
     
     h <- l() %>% 
-      ggplot(aes(x = stage, y = count)) +
-      geom_bar(aes(fill = result), stat = "identity", position = "fill")
+      ggplot(aes(x = stage, y = Percentage)) +
+      geom_bar(aes(fill = result), stat = "identity", position = "fill") +
+      xlab("Season by Stage")
     
     ggplotly(h)
     
@@ -105,7 +106,11 @@ ggplotly(g)
     ggplotly(ggplot(m(), aes(x = as.numeric(season),
                                      y = average_odds, color = new_agency)) +
                geom_point() +
-               geom_smooth(method = lm, se = F))
+               geom_smooth(method = lm, se = F) +
+               ggtitle("Average Odds by Year and Agency") +
+               ylab("Average Odds") +
+               xlab("") +
+               theme(legend.title = element_blank()))
 
     })
 

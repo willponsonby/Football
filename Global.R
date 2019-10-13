@@ -20,8 +20,8 @@ pie = full_recovery %>%
   group_by(odds_for) %>% 
   summarise(count = n())
 
-pie_plot = plot_ly(data = pie, labels = pie$odds_for, values = pie$count, type = 'pie') %>% 
-  layout(title = 'Result prediction for all bookmakers',
+pie_plot = plot_ly(data = pie, labels = c("A" = "Away Win", "D" = "Draw", "H" = "Home Win"), values = pie$count, type = 'pie') %>% 
+  layout(title = 'Bookmaker Result Predictions',
          xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
          yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE))
 
@@ -59,7 +59,7 @@ percentage_by_agency = ggplotly(full_recovery %>% select(home_team_goal, away_te
                                   ggplot(aes(x = reorder(new_agency, -Percentage), y = Percentage)) + 
                                   geom_bar(aes(fill = Percentage), stat = "identity") +
                                   ggtitle("Correct predictions by Bookmaker") +
-                                  ylab("Percentage Correct") + 
+                                  ylab("Correct Prediction %") + 
                                   xlab("Agency"))
 
 

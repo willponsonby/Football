@@ -8,22 +8,30 @@ shinyUI(fluidPage(
   ),
   
   dashboardSidebar(
-    width = 350, 
-    sidebarUserPanel(name = 'Think Smart'),
+    width = 350,
     sidebarMenu(
       
       menuItem('Story',
-               tabName = 'story'),
+               tabName = 'story', 
+               icon=icon("book-open")),
       menuItem('Overall Picture', 
-               tabName = 'overall'),
-      menuItem('Agencies',
-               tabName = 'by_agency'),
-      menuItem('Winnings',
-               tabName = 'winnings'),
+               tabName = 'overall',
+               icon=icon("chart-pie")),
+      menuItem('Quality of Bookmaker',
+               tabName = 'by_agency', 
+               icon=icon("check")),
+      menuItem('Winnings (Or more likely losses..)',
+               tabName = 'winnings', 
+               icon=icon("pound-sign")),
       menuItem('Stage of Season',
-               tabName = 'stage'),
-      menuItem('Average odds',
-               tabName = 'average')
+               tabName = 'stage',
+               icon=icon("calendar-alt")),
+      menuItem('Average odds per Bookmaker',
+               tabName = 'average',
+               icon=icon("chart-line")),
+      menuItem('About the Author',
+               tabName = 'about_me',
+               icon=icon("user"))
     )
   ),
   
@@ -69,7 +77,7 @@ shinyUI(fluidPage(
       tabItem(
         tabName = 'stage',
         fluidRow(
-          selectInput("league", label = h3("League"),
+          selectInput("league", label = h3("Average Results by League from 2008/2009 to 2015/2016"),
                       choices = list("English Premier League" = "English Premier League",
                                      "Belguim Jupiler League" = "Belgium Jupiler League",
                                      "France Ligue 1" = "France Ligue 1",
@@ -85,7 +93,7 @@ shinyUI(fluidPage(
       ),
       tabItem(
         tabName = 'average',
-        fluidRow(column(3, 
+        fluidRow(column(2, 
           checkboxGroupInput("agency", label = h3("Bookmaker"),
                              choices = list("Bet365" = "B365",
                                             "Blue Square" = "BS",
@@ -98,9 +106,12 @@ shinyUI(fluidPage(
                                             "William Hill" = "WH"),
                              selected = "Bet365")),
           
-            column(9, plotlyOutput("averageodds"))
+            column(10, plotlyOutput("averageodds"))
           
         )
+      ),
+      tabItem(
+        tabName = 'about_me'
       )
       )
     )
