@@ -5,6 +5,7 @@ shinyServer(function(input, output) {
   output$Agencies <- renderPlotly(pie_plot)
   output$Reality <- renderPlotly(reality_plot)
   output$Percentage <- renderPlotly(percentage_by_agency)
+  output$Average <- renderPlotly(av_plot)
   
   r <- reactive({
     
@@ -51,15 +52,66 @@ ggplotly(g)
     
    })
 
+  m <- reactive ({
+
+    if (length(input$agency) > 0){
+      rbind(
+        if("B365" %in% input$agency){
+          full_recovery %>%
+            # group_by(new_agency, season) %>%
+            filter(new_agency == "B365")
+        } else NULL,
+        if("BS" %in% input$agency){
+          full_recovery %>%
+            # group_by(new_agency, season) %>%
+            filter(new_agency == "BS")
+        } else NULL,if("BW" %in% input$agency){
+          full_recovery %>%
+            # group_by(new_agency, season) %>%
+            filter(new_agency == "BW")
+        } else NULL,if("GB" %in% input$agency){
+          full_recovery %>%
+            # group_by(new_agency, season) %>%
+            filter(new_agency == "GB")
+        } else NULL,if("IW" %in% input$agency){
+          full_recovery %>%
+            # group_by(new_agency, season) %>%
+            filter(new_agency == "IW")
+        } else NULL,if("LB" %in% input$agency){
+          full_recovery %>%
+            # group_by(new_agency, season) %>%
+            filter(new_agency == "LB")
+        } else NULL,if("VC" %in% input$agency){
+          full_recovery %>%
+            # group_by(new_agency, season) %>%
+            filter(new_agency == "VC")
+        } else NULL,if("SJ" %in% input$agency){
+          full_recovery %>%
+            # group_by(new_agency, season) %>%
+            filter(new_agency == "SJ")
+        } else NULL,if("WH" %in% input$agency){
+          full_recovery %>%
+            # group_by(new_agency, season) %>%
+            filter(new_agency == "WH")
+        } else NULL) %>%
+        group_by(new_agency, season) %>% 
+        summarise(average_odds = sum(odds)/n()) -> temporary
+    } else average_odd -> temporary
+    temporary
+   })
   
+  output$averageodds <- renderPlotly({
+
+    ggplotly(ggplot(m(), aes(x = as.numeric(season),
+                                     y = average_odds, color = new_agency)) +
+               geom_point() +
+               geom_smooth(method = lm, se = F))
+
+    })
+
   
 })
 
-  # agency_reactive <- reactive({
-  #     switch(input$agency, 
-  #            "Bet365" = final_football$Bet365_result,
-  #            "Blue Square" = final_football$BlueSquare_result)
-  #   })
 
 
 

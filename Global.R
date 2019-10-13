@@ -5,8 +5,8 @@ library(plotly)
 library(shinydashboard)
 
 # write.csv(football4, "final_football.csv", row.names = FALSE)
-
-final_football = read.csv("final_football.csv", header = TRUE)
+# 
+# final_football = read.csv("final_football.csv", header = TRUE)
 
 full_recovery = read.csv("full_recovery.csv", header = TRUE)
 
@@ -61,6 +61,16 @@ percentage_by_agency = ggplotly(full_recovery %>% select(home_team_goal, away_te
                                   ggtitle("Correct predictions by Bookmaker") +
                                   ylab("Percentage Correct") + 
                                   xlab("Agency"))
+
+
+### Average Odds by agency
+average_odd = full_recovery %>%
+  group_by(new_agency, season) %>%
+  summarise(average_odds = sum(odds)/n())
+
+
+
+
 
 
 ### Consistent betting

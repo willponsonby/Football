@@ -21,7 +21,9 @@ shinyUI(fluidPage(
       menuItem('Winnings',
                tabName = 'winnings'),
       menuItem('Stage of Season',
-               tabName = 'stage')
+               tabName = 'stage'),
+      menuItem('Average odds',
+               tabName = 'average')
     )
   ),
   
@@ -61,9 +63,7 @@ shinyUI(fluidPage(
                                      "William Hill" = "WH"),
                       selected = "Bet365"))),
           fluidRow(
-          
           plotlyOutput('Winnings')
-          
           )
       ),
       tabItem(
@@ -81,6 +81,25 @@ shinyUI(fluidPage(
                                      "Spain LIGA BBVA" = "Spain LIGA BBVA"),
                       selected = "English Premier League"),
           plotlyOutput("Stage")
+        )
+      ),
+      tabItem(
+        tabName = 'average',
+        fluidRow(column(3, 
+          checkboxGroupInput("agency", label = h3("Bookmaker"),
+                             choices = list("Bet365" = "B365",
+                                            "Blue Square" = "BS",
+                                            "BetWin" = "BW",
+                                            "Gamebookers" = "GB",
+                                            "Interwetten" = "IW",
+                                            "Ladbrokes" = "LB",
+                                            "Stan James" = "SJ",
+                                            "VC Bet" = "VC",
+                                            "William Hill" = "WH"),
+                             selected = "Bet365")),
+          
+            column(9, plotlyOutput("averageodds"))
+          
         )
       )
       )
