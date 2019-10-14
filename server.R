@@ -6,6 +6,14 @@ shinyServer(function(input, output) {
   output$Reality <- renderPlotly(reality_plot)
   output$Percentage <- renderPlotly(percentage_by_agency)
   output$Average <- renderPlotly(av_plot)
+
+  url <- a("LinkedIn", 
+           href="https://www.linkedin.com/in/william-ponsonby-72196015b/",
+           icon("linkedin"))
+    output$LItab <- renderUI({
+    tagList(url)
+  })
+ 
   
   r <- reactive({
     
@@ -94,6 +102,10 @@ ggplotly(g)
           full_recovery %>%
             # group_by(new_agency, season) %>%
             filter(new_agency == "WH")
+        } else NULL,if("PS" %in% input$agency){
+          full_recovery %>%
+            # group_by(new_agency, season) %>%
+            filter(new_agency == "PS")
         } else NULL) %>%
         group_by(new_agency, season) %>% 
         summarise(average_odds = sum(odds)/n()) -> temporary

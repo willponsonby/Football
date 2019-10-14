@@ -38,7 +38,21 @@ shinyUI(fluidPage(
   dashboardBody(
     tabItems(
       tabItem(
-        tabName = 'story'
+        tabName = 'story',
+        fluidRow(print(img(src="football_2_pic.JPG",
+                           width = "60%", 
+                           style="display: block; margin-left: auto; margin-right: auto;"))),
+        fluidRow(p(br("The data used to create this Shiny App comes from Kaggle dataset
+                      and includes information on the football matches over ten
+                      different European leagues from 2008-2016 and the odds given
+                      by ten different betting agencies.")),
+                 p("The original purpose of this app was to determine how accurate
+                 betting agencies are in the prediction of match results.
+                   It also aims to show how much of an advantage the home team possesses 
+                   and whether this is reflected in the odds offered by bookmakers. Finally,
+                   it perhaps provides direction for someone looking to gain a small advantage
+                   when betting."),
+                 align = "center")
       ), 
       tabItem(
         tabName = 'overall',
@@ -60,7 +74,8 @@ shinyUI(fluidPage(
                       selected = "Bet on Home")),
           column(6,
           selectInput("which", label = h3("Bookmaker"),
-                      choices = list("Bet365" = "B365", 
+                      choices = list("Bet365" = "B365",
+                                     "Pinnacle" = "PS",
                                      "Blue Square" = "BS",
                                      "BetWin" = "BW",
                                      "Gamebookers" = "GB",
@@ -96,6 +111,7 @@ shinyUI(fluidPage(
         fluidRow(column(2, 
           checkboxGroupInput("agency", label = h3("Bookmaker"),
                              choices = list("Bet365" = "B365",
+                                            "Pinnacle" = "PS",
                                             "Blue Square" = "BS",
                                             "BetWin" = "BW",
                                             "Gamebookers" = "GB",
@@ -111,7 +127,16 @@ shinyUI(fluidPage(
         )
       ),
       tabItem(
-        tabName = 'about_me'
+        tabName = 'about_me',
+        fluidRow(print(img(src="app_picture.jpg",
+                           width = "20%", 
+                           style="display: block; margin-left: auto; margin-right: auto;"))),
+        fluidRow(p(br("William Ponsonby is a data scientist currently studying at the NYC Data Science Academy.
+                      He is interested in sports as well as Russia and Eastern Europe, having studied Russian,
+                      Czech and Slovak at Oxford University. Find him on LinkedIn via the link below.")),
+                 align = "center"),
+        fluidRow(uiOutput("LItab"), 
+                 align = "center")
       )
       )
     )
