@@ -17,6 +17,9 @@ shinyUI(fluidPage(
       menuItem('Overall Picture', 
                tabName = 'overall',
                icon=icon("chart-pie")),
+      menuItem('Bookmaker Losses',
+               tabName = 'losses', 
+               icon=icon("minus")),
       menuItem('Quality of Bookmaker',
                tabName = 'by_agency', 
                icon=icon("check")),
@@ -26,7 +29,7 @@ shinyUI(fluidPage(
       menuItem('Stage of Season',
                tabName = 'stage',
                icon=icon("calendar-alt")),
-      menuItem('Average odds per Bookmaker',
+      menuItem('Average Odds per Bookmaker',
                tabName = 'average',
                icon=icon("chart-line")),
       menuItem('About the Author',
@@ -59,6 +62,10 @@ shinyUI(fluidPage(
         fluidRow(column (6, (plotlyOutput('Agencies'))),
                  column(6, plotlyOutput('Reality')))
         ),
+      tabItem(
+        tabName = 'losses',
+        fluidRow(plotlyOutput('Losses'))
+      ),
       tabItem(
         tabName = 'by_agency',
         fluidRow(plotlyOutput('Percentage'))
@@ -132,7 +139,7 @@ shinyUI(fluidPage(
                            width = "20%", 
                            style="display: block; margin-left: auto; margin-right: auto;"))),
         fluidRow(p(br("William Ponsonby is a data scientist currently studying at the NYC Data Science Academy.
-                      He is interested in sports as well as Russia and Eastern Europe, having studied Russian,
+                      He is interested in sports as well Russia and Eastern Europe, having studied Russian,
                       Czech and Slovak at Oxford University. Find him on LinkedIn via the link below.")),
                  align = "center"),
         fluidRow(uiOutput("LItab"), 
@@ -142,50 +149,3 @@ shinyUI(fluidPage(
     )
   )
 ))
-
-
-
-# fluidRow(selectizeInput(
-#   
-#   inputId = 'Agencies',
-#   label = 'agency', 
-#   choices = list("Bet365" = 1, "Blue Square" = 2)
-
-# ),
-
-
-
-
-
-
-
-
-# library(shiny)
-# fluidPage(
-#   titlePanel("Beat the Bookies!"),
-#     selectInput("agency", label = h3("Bookmaker"), 
-#                 choices = list("Bet365" = 1, "Blue Square" = 2), 
-#                 selected = 1),
-#   mainPanel(plotOutput("value"))
-# )
-
-
-
-
-
-
-
-
-
-
-
-# library(shiny)
-# fluidPage(
-#   titlePanel("Beat the Bookies!"),
-#     sidebarLayout(
-#     sidebarPanel(selectizeInput(inputId = "agency_predictions",
-#                                 label = "Bookmakers",
-#                                 choices = unique(Agencies))),
-#     mainPanel(fluidRow(plotOutput("pie")))
-#   )
-# )

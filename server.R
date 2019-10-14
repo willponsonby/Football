@@ -6,6 +6,8 @@ shinyServer(function(input, output) {
   output$Reality <- renderPlotly(reality_plot)
   output$Percentage <- renderPlotly(percentage_by_agency)
   output$Average <- renderPlotly(av_plot)
+  output$Losses <- renderPlotly(losses)
+
 
   url <- a("LinkedIn", 
            href="https://www.linkedin.com/in/william-ponsonby-72196015b/",
@@ -130,68 +132,3 @@ ggplotly(g)
 })
 
 
-
-
-
-
-
-
-# 
-# 
-# my_football_odds3 %>% 
-#   group_by(input$agency) %>% 
-#   summarise(count = n()) %>% 
-#   ggplot(aes(x = input$agency, y = count)) + geom_bar(stat = "identity")
-
-
-#   
-#  agency_reactive <- reactive({
-#     switch(input$agency, 
-#            "Bet365" = my_football_odds3$Bet365_result,
-#            "Blue Square" = my_football_odds3$BlueSquare_result)
-#   })
-#   
-#   output$value <- renderPlotly({  
-#   
-#   agency_reactive() %>% 
-#     group_by(agency_reactive()[1]) %>% 
-#     summarise(count = n()) %>% 
-#     ggplot(aes(x = agency_reactive(), y = count)) + geom_bar(stat = "identity") 
-#     
-#   })
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# function(input, output) {
-#   
-#   observeEvent({
-#     the_agencies <- unique(Agencies)
-#     updateSelectizeInput(
-#       choices = the_agencies,
-#       selected = the_agencies[1])
-#   })
-#   
-#   agency_predictions <- reactive({input$the_agencies %>% 
-#       mutate(result_prediction = ifelse(input$the_agencies[1]<input$the_agencies[2] & input$the_agencies[1]<input$the_agencies[3], "home win", 
-#                                         ifelse(input$the_agencies[3]<input$the_agencies[2] & input$the_agencies[3]<input$the_agencies[1], "away win", "draw"))) %>% 
-#       group_by(result_prediction) %>% 
-#       mutate(total = n())})
-#   
-#   output$pie <- renderPlot(agency_predictions %>% 
-#                              ggplot(aes(x = 1)) + geom_bar(aes(fill = result_prediction)) + 
-#                              coord_polar(theta = "y"))
-# }

@@ -4,12 +4,7 @@ library(tidyr)
 library(plotly)
 library(shinydashboard)
 
-# write.csv(football4, "final_football.csv", row.names = FALSE)
-# 
-# final_football = read.csv("final_football.csv", header = TRUE)
-
 full_recovery = read.csv("full_recovery.csv", header = TRUE)
-
 
 ### pie chart for all agencies
 pie = full_recovery %>% 
@@ -77,10 +72,24 @@ average_odd = full_recovery %>%
 
 
 
+### Boxplots for agency losses
+
+loss = full_recovery %>% 
+  mutate(result = ifelse(home_team_goal>away_team_goal, "H", 
+                         ifelse(away_team_goal>home_team_goal, "A", "D"))) %>% 
+  filter(result == odds_for) %>% 
+  group_by(result) %>% 
+  select(result, odds_for, odds) %>% 
+  mutate(loss = (odds-1))
 
 
-
-
+losses = ggplotly(ggplot(loss, aes(y = loss, x = result)) + 
+                    geom_boxplot(y = loss, aes(fill = result)) +
+                    coord_cartesian(ylim = 0:6) +
+                    ggtitle("Bookmaker losses on a succesful £1 Bet") +
+                    xlab("Result") +
+                    ylab("Losses (£)") +
+                    scale_x_discrete(labels = c("Away Win", "Draw", "Home Win")))
 
 
 
