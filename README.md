@@ -1,1 +1,3 @@
-# Football
+https://nycdatascience.com/blog/student-works/beat-the-bookies/
+
+Bookmakers tend to fare a lot better than gamblers, but just how accurate are they when it comes to their own predictions? And do they skew their odds to take advantage of certain natural human tendencies? In making this Shiny App, I set out to explore the betting data from 10 different betting agencies across 10 European football leagues from 2008 -2016. My aims were to find out how far their predictions deviate from reality and which are most successful in this respect. Also, to provide a steer towards bookmakers with more generous odds and ideally find a chink in their armor for punters to exploit!
